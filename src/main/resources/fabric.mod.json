@@ -1,0 +1,19 @@
+{
+  "schemaVersion": 1,
+  "id": "fix248936",
+  "version": "${version}",
+  "name": "Fix MC-248936",
+  "description": "fix MC-248936",
+  "authors": [ "LemonCaramel" ],
+  "contact": {
+    "website": "https://caramel.moe",
+    "repo": "https://github.com/LemonCaramel"
+  },
+  "license": "MIT",
+  "environment": "client",
+  "mixins": [ "fix248936.mixins.json" ],
+  "depends": {
+    "fabricloader": ">=0.13.0",
+    "minecraft": ">=1.17"
+  }
+}
