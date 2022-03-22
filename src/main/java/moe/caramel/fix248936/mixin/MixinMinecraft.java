@@ -19,13 +19,7 @@ public abstract class MixinMinecraft {
 
     @Shadow public abstract ClientPackSource getClientPackSource();
 
-    @Inject(
-        method = "<init>",
-        at = @At(
-            value = "TAIL",
-            target = "Lnet/minecraft/client/Minecraft;setWindowActive(Z)V"
-        )
-    )
+    @Inject(method = "<init>", at = @At(value = "TAIL"))
     public void loadMinecraftIcon(GameConfig gameConfig, CallbackInfo ci) throws IOException {
         if (!Minecraft.ON_OSX) return;
         MacOsUtil.loadIcon(this.getClientPackSource().getVanillaPack().getResource(PackType.CLIENT_RESOURCES, new ResourceLocation("icons/minecraft.icns")));

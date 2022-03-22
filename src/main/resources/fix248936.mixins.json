@@ -2,8 +2,11 @@
   "required": true,
   "minVersion": "0.8",
   "package": "moe.caramel.fix248936.mixin",
-  "compatibilityLevel": "JAVA_16",
-  "client": [ "MixinMinecraft" ],
+  "compatibilityLevel": "JAVA_11",
+  "client": [
+    "MixinMinecraft",
+    "MixinWindow"
+  ],
   "injectors": {
     "defaultRequire": 1
   }

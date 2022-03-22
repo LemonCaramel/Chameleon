@@ -1,14 +1,13 @@
 package moe.caramel.fix248936;
 
 import ca.weblite.objc.Client;
-import com.mojang.blaze3d.platform.MacosUtil;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.Base64;
 
-public final class MacOsUtil extends MacosUtil {
+public final class MacOsUtil {
 
     private MacOsUtil() { throw new UnsupportedOperationException(); }
 

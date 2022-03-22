@@ -1,19 +1,20 @@
 {
   "schemaVersion": 1,
-  "id": "fix248936",
+  "id": "fix-mc248936",
   "version": "${version}",
   "name": "Fix MC-248936",
-  "description": "fix MC-248936",
+  "description": "Fix MC-248936",
   "authors": [ "LemonCaramel" ],
   "contact": {
     "website": "https://caramel.moe",
-    "repo": "https://github.com/LemonCaramel"
+    "repo": "https://github.com/LemonCaramel/Fix-MC248936"
   },
   "license": "MIT",
   "environment": "client",
   "mixins": [ "fix248936.mixins.json" ],
   "depends": {
-    "fabricloader": ">=0.13.0",
-    "minecraft": ">=1.17"
+    "fabricloader": ">=0.12.0",
+    "minecraft": ">=1.16.4",
+    "java": ">=11"
   }
 }
