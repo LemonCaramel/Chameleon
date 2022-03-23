@@ -10,13 +10,13 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import java.io.InputStream;
 
 /**
- * for Minecraft ~1.17.1 client
+ * for Minecraft ~1.17.1 client // fix GLFW error 65548
  */
 @Mixin(Window.class)
 public final class MixinWindow {
 
     @Inject(method = "setIcon", at = @At(value = "HEAD"), cancellable = true)
-    public void setIcon(InputStream inputStream, InputStream inputStream2, CallbackInfo ci) {
+    public void setIcon(InputStream x16, InputStream x32, CallbackInfo ci) {
         if (Minecraft.ON_OSX) ci.cancel();
     }
 }

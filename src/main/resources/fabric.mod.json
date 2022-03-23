@@ -11,6 +11,7 @@
   },
   "license": "MIT",
   "environment": "client",
+  "entrypoints": { "main": [ "moe.caramel.fix248936.Main" ] },
   "mixins": [ "fix248936.mixins.json" ],
   "depends": {
     "fabricloader": ">=0.12.0",

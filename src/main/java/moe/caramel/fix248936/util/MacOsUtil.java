@@ -1,4 +1,4 @@
-package moe.caramel.fix248936;
+package moe.caramel.fix248936.util;
 
 import ca.weblite.objc.Client;
 import org.jetbrains.annotations.NotNull;

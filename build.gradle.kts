@@ -15,8 +15,9 @@ java {
 
 dependencies {
     minecraft("com.mojang", "minecraft", property("minecraft_version") as String)
-    modImplementation("net.fabricmc", "fabric-loader", property("loader_version") as String)
     mappings(loom.officialMojangMappings())
+    modImplementation("net.fabricmc", "fabric-loader", property("loader_version") as String)
+    modImplementation("net.fabricmc.fabric-api", "fabric-api", property("fabric_version") as String)
 }
 
 tasks{
