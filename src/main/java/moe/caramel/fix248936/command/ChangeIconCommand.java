@@ -46,7 +46,7 @@ public final class ChangeIconCommand {
                     return -1;
                 } catch (IOException exception) {
                     source.sendError(new TranslatableComponent("caramel.fix248936.change.exception"));
-                    exception.fillInStackTrace();
+                    exception.printStackTrace();
                     return -1;
                 }
             })
