@@ -1,0 +1,5 @@
+{
+  "caramel.fix248936.change.done": "アイコンを \"%s\"に変更しました。",
+  "caramel.fix248936.change.404": "\"%s\"という名前のアイコンが見つかりません。",
+  "caramel.fix248936.change.exception": "アイコンの変更中にエラーが発生しました。"
+}
