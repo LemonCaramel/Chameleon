@@ -1,6 +1,6 @@
 # Fix MC-248936
 
-*다른 언어로 읽기: [English](README.md), 한국어.*
+*다른 언어로 읽기: [English](README.md), 한국어, [日本語](README.ja.md).*
 
 --------
 
