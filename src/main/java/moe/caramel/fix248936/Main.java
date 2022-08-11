@@ -3,7 +3,7 @@ package moe.caramel.fix248936;
 import moe.caramel.fix248936.command.ChangeIconCommand;
 import moe.caramel.fix248936.util.ModConfig;
 import net.fabricmc.api.ModInitializer;
-import net.fabricmc.fabric.api.client.command.v1.ClientCommandManager;
+import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 
 public final class Main implements ModInitializer {
 
@@ -13,7 +13,8 @@ public final class Main implements ModInitializer {
         ModConfig.getInstance();
 
         /* Register Command */
-        final var dispatcher = ClientCommandManager.DISPATCHER;
-        ChangeIconCommand.register(dispatcher);
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
+          ChangeIconCommand.register(dispatcher);
+        });
     }
 }

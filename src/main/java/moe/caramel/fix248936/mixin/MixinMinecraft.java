@@ -12,6 +12,7 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+import java.util.Optional;
 import java.io.IOException;
 
 import static moe.caramel.fix248936.util.ModConfig.ORIGINAL_ICON;
@@ -25,9 +26,13 @@ public abstract class MixinMinecraft {
     public void loadMinecraftIcon(GameConfig gameConfig, CallbackInfo ci) throws IOException {
         if (!Minecraft.ON_OSX) return;
         final var config = ModConfig.getInstance();
-        Resource resource = this.getResourceManager().getResource(ORIGINAL_ICON);
-        try { resource = this.getResourceManager().getResource(config.iconLocation.get()); }
-        catch (IOException ignored) { config.iconLocation.update(null, ORIGINAL_ICON); }
-        MacOsUtil.loadIcon(resource.getInputStream());
+
+        Optional<Resource> resource = this.getResourceManager().getResource(config.iconLocation.get());
+        if(!resource.isPresent()) {
+          resource = this.getResourceManager().getResource(ORIGINAL_ICON);
+        }
+        if(resource.isPresent()) {
+          MacOsUtil.loadIcon(resource.get().open());
+        }
     }
 }
