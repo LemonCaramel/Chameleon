@@ -19,6 +19,10 @@ dependencies {
     modImplementation("net.fabricmc.fabric-api", "fabric-api", property("fabric_version") as String)
 }
 
+loom {
+    accessWidenerPath.set( file("src/main/resources/chameleon-dock.accesswidener") )
+}
+
 tasks{
     processResources {
         inputs.property("version", project.version)

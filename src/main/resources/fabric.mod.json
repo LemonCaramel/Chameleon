@@ -16,7 +16,8 @@
   "license": "MIT",
   "environment": "client",
   "entrypoints": { "main": [ "moe.caramel.chameleon.Main" ] },
-  "mixins": [ "chameleon.mixins.json" ],
+  "mixins": [ "chameleon-dock.mixins.json" ],
+  "accessWidener": "chameleon-dock.accesswidener",
   "depends": {
     "fabric-command-api-v2": "*",
     "fabricloader": ">=0.14.6",

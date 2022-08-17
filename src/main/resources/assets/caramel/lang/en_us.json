@@ -1,4 +1,7 @@
 {
+  "caramel.chameleon.resetToast.title": "Chameleon settings was reset",
+  "caramel.chameleon.resetToast.desc": "Changed to default icon due to an error.",
+
   "caramel.chameleon.change.done": "Successfully changed the icon to \"%s\".",
   "caramel.chameleon.change.404": "Icon named \"%s\" does not exist.",
   "caramel.chameleon.change.exception": "An error occurred while applying changes."

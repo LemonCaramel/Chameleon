@@ -1,9 +1,13 @@
 package moe.caramel.chameleon.mixin;
 
 import com.mojang.blaze3d.platform.MacosUtil;
+import moe.caramel.chameleon.Main;
 import moe.caramel.chameleon.util.ModConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.main.GameConfig;
+import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -40,8 +44,14 @@ public abstract class MixinMinecraft {
         if (!Minecraft.ON_OSX) return;
         final var config = ModConfig.getInstance();
 
-        Optional<Resource> resource = this.getResourceManager().getResource(config.iconLocation.get());
+        final ResourceLocation location = config.iconLocation.get();
+        Optional<Resource> resource = this.getResourceManager().getResource(location);
         if (resource.isEmpty()) {
+            Main.INIT_TOAST_QUEUE.add(new SystemToast(
+                SystemToast.SystemToastIds.PACK_LOAD_FAILURE,
+                Component.translatable("caramel.chameleon.resetToast.title"),
+                Component.translatable("caramel.chameleon.resetToast.desc")
+            ));
             config.iconLocation.update(null, ORIGINAL_ICON);
             resource = this.getResourceManager().getResource(ORIGINAL_ICON);
         }
