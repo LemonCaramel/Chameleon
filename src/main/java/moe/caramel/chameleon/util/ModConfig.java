@@ -1,4 +1,4 @@
-package moe.caramel.fix248936.util;
+package moe.caramel.chameleon.util;
 
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
@@ -10,7 +10,7 @@ import java.util.Properties;
 
 public final class ModConfig extends Settings<ModConfig> {
 
-    private static final Path MOD_CONFIG = new File("./config/caramel.fix_mc-248936.properties").toPath();
+    private static final Path MOD_CONFIG = new File("./config/caramel.chameleon.properties").toPath();
     public static final ResourceLocation ORIGINAL_ICON = new ResourceLocation("icons/minecraft.icns");
 
     /* ======================================== */

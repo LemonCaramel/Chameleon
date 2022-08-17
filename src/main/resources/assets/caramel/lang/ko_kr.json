@@ -1,5 +1,5 @@
 {
-  "caramel.fix248936.change.done": "성공적으로 아이콘을 \"%s\"(으)로 변경하였습니다.",
-  "caramel.fix248936.change.404": "\"%s\"이라는 이름의 아이콘은 존재하지 않습니다.",
-  "caramel.fix248936.change.exception": "변경 사항을 적용하는 도중 오류가 발생하였습니다."
+  "caramel.chameleon.change.done": "성공적으로 아이콘을 \"%s\"(으)로 변경하였습니다.",
+  "caramel.chameleon.change.404": "\"%s\"이라는 이름의 아이콘은 존재하지 않습니다.",
+  "caramel.chameleon.change.exception": "변경 사항을 적용하는 도중 오류가 발생하였습니다."
 }

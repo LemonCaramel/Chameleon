@@ -1,21 +1,21 @@
 {
   "schemaVersion": 1,
-  "id": "fix-mc248936",
+  "id": "chameleon",
   "version": "${version}",
-  "name": "Fix MC-248936",
-  "description": "Fix MC-248936",
+  "name": "Chameleon",
+  "description": "Changes the dock icon of macOS",
   "authors": [ "LemonCaramel" ],
   "contact": {
     "website": "https://caramel.moe",
-    "repo": "https://github.com/LemonCaramel/Fix-MC248936"
+    "repo": "https://github.com/LemonCaramel/Chameleon"
   },
   "license": "MIT",
   "environment": "client",
-  "entrypoints": { "main": [ "moe.caramel.fix248936.Main" ] },
-  "mixins": [ "fix248936.mixins.json" ],
+  "entrypoints": { "main": [ "moe.caramel.chameleon.Main" ] },
+  "mixins": [ "chameleon.mixins.json" ],
   "depends": {
-    "fabricloader": ">=0.12.0",
-    "minecraft": ">=1.16.4",
-    "java": ">=11"
+    "fabricloader": ">=0.14.6",
+    "minecraft": ">=1.19",
+    "java": ">=17"
   }
 }

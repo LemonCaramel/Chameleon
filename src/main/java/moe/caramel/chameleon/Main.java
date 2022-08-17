@@ -1,7 +1,7 @@
-package moe.caramel.fix248936;
+package moe.caramel.chameleon;
 
-import moe.caramel.fix248936.command.ChangeIconCommand;
-import moe.caramel.fix248936.util.ModConfig;
+import moe.caramel.chameleon.command.ChangeIconCommand;
+import moe.caramel.chameleon.util.ModConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
 
@@ -13,8 +13,8 @@ public final class Main implements ModInitializer {
         ModConfig.getInstance();
 
         /* Register Command */
-        ClientCommandRegistrationCallback.EVENT.register((dispatcher, registryAccess) -> {
-          ChangeIconCommand.register(dispatcher);
+        ClientCommandRegistrationCallback.EVENT.register((dispatcher, context) -> {
+            ChangeIconCommand.register(dispatcher);
         });
     }
 }

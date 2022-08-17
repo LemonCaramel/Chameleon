@@ -1,5 +1,5 @@
 {
-  "caramel.fix248936.change.done": "Successfully changed the icon to \"%s\".",
-  "caramel.fix248936.change.404": "Icon named \"%s\" does not exist.",
-  "caramel.fix248936.change.exception": "An error occurred while applying changes."
+  "caramel.chameleon.change.done": "Successfully changed the icon to \"%s\".",
+  "caramel.chameleon.change.404": "Icon named \"%s\" does not exist.",
+  "caramel.chameleon.change.exception": "An error occurred while applying changes."
 }
