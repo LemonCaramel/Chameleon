@@ -1,17 +1,25 @@
 package moe.caramel.chameleon.util;
 
+import com.mojang.blaze3d.platform.MacosUtil;
+import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.dedicated.Settings;
-
 import java.io.File;
+import java.io.IOException;
 import java.nio.file.Path;
+import java.util.Objects;
 import java.util.Properties;
+import java.util.Set;
+import java.util.function.Function;
 
 public final class ModConfig extends Settings<ModConfig> {
 
     private static final Path MOD_CONFIG = new File("./config/caramel.chameleon.properties").toPath();
     public static final ResourceLocation ORIGINAL_ICON = new ResourceLocation("icons/minecraft.icns");
+    public static final Function<Minecraft, Set<ResourceLocation>> GET_ICON_SET = client -> {
+        return client.getResourceManager().listResources("icons", Objects::nonNull).keySet();
+    };
 
     /* ======================================== */
     private static ModConfig instance;
@@ -53,4 +61,17 @@ public final class ModConfig extends Settings<ModConfig> {
         instance.store(MOD_CONFIG);
         return getInstance();
     }
+
+    /* ======================================== */
+    /**
+     * Apply and save icon setting.
+     * @param client Minecraft object
+     * @param icon Icon Resource location
+     * @throws IOException InputStream open failed
+     */
+    public static void changeIcon(Minecraft client, ResourceLocation icon) throws IOException {
+        MacosUtil.loadIcon(client.getResourceManager().getResource(icon).get().open());
+        ModConfig.getInstance().iconLocation.update(null, icon);
+    }
+    /* ======================================== */
 }

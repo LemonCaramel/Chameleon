@@ -1,21 +1,25 @@
 {
   "schemaVersion": 1,
-  "id": "chameleon",
+  "id": "chameleon-dock",
   "version": "${version}",
   "name": "Chameleon",
-  "description": "Changes the dock icon of macOS",
   "authors": [ "LemonCaramel" ],
   "contributors": [
     "t3rminus"
   ],
   "contact": {
-    "website": "https://caramel.moe",
-    "repo": "https://github.com/LemonCaramel/Chameleon"
+    "email": "admin@caramel.moe",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/chameleon-dock",
+    "sources": "https://github.com/LemonCaramel/Chameleon",
+    "issues": "https://github.com/LemonCaramel/Chameleon/issues"
   },
   "icon": "icon.png",
   "license": "MIT",
   "environment": "client",
-  "entrypoints": { "main": [ "moe.caramel.chameleon.Main" ] },
+  "entrypoints": {
+    "main": [ "moe.caramel.chameleon.Main" ],
+    "modmenu": [ "moe.caramel.chameleon.util.ModMenuImpl" ]
+  },
   "mixins": [ "chameleon-dock.mixins.json" ],
   "accessWidener": "chameleon-dock.accesswidener",
   "depends": {
@@ -23,5 +27,12 @@
     "fabricloader": ">=0.14.6",
     "minecraft": ">=1.19",
     "java": ">=17"
+  },
+  "custom": {
+    "modupdater": {
+      "strategy": "curseforge",
+      "projectID": 597393,
+      "strict": false
+    }
   }
 }
