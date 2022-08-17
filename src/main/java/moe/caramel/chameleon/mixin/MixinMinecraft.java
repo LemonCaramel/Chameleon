@@ -10,7 +10,9 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import java.io.InputStream;
 import java.util.Optional;
 import java.io.IOException;
 
@@ -21,13 +23,19 @@ public abstract class MixinMinecraft {
 
     @Shadow public abstract ResourceManager getResourceManager();
 
-    @Inject(
+    @Redirect(
         method = "<init>",
         at = @At(
             value = "INVOKE",
             target = "Lcom/mojang/blaze3d/platform/MacosUtil;loadIcon(Ljava/io/InputStream;)V"
         )
     )
+    public void dockIconLoadCancel(InputStream stream) throws IOException {
+        stream.close(); // No
+    }
+
+    // Run after all resources are loaded
+    @Inject(method = "<init>", at = @At(value = "TAIL"))
     public void loadMinecraftIcon(GameConfig gameConfig, CallbackInfo ci) throws IOException {
         if (!Minecraft.ON_OSX) return;
         final var config = ModConfig.getInstance();
@@ -37,7 +45,7 @@ public abstract class MixinMinecraft {
             config.iconLocation.update(null, ORIGINAL_ICON);
             resource = this.getResourceManager().getResource(ORIGINAL_ICON);
         }
-        if (resource.isPresent()) {
+        if (resource.isPresent()) { // um..
             MacosUtil.loadIcon(resource.get().open());
         }
     }

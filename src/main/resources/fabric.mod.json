@@ -5,15 +5,20 @@
   "name": "Chameleon",
   "description": "Changes the dock icon of macOS",
   "authors": [ "LemonCaramel" ],
+  "contributors": [
+    "t3rminus"
+  ],
   "contact": {
     "website": "https://caramel.moe",
     "repo": "https://github.com/LemonCaramel/Chameleon"
   },
+  "icon": "icon.png",
   "license": "MIT",
   "environment": "client",
   "entrypoints": { "main": [ "moe.caramel.chameleon.Main" ] },
   "mixins": [ "chameleon.mixins.json" ],
   "depends": {
+    "fabric-command-api-v2": "*",
     "fabricloader": ">=0.14.6",
     "minecraft": ">=1.19",
     "java": ">=17"

@@ -8,10 +8,8 @@ base {
     archivesName.set(property("archives_base_name") as String)
 }
 
-java {
-    sourceCompatibility = JavaVersion.VERSION_17
-    targetCompatibility = JavaVersion.VERSION_17
-    toolchain.languageVersion.set(JavaLanguageVersion.of(17))
+java.toolchain {
+    languageVersion.set(JavaLanguageVersion.of(17))
 }
 
 dependencies {
