@@ -1,0 +1,31 @@
+name: Build Chameleon
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - uses: gradle/wrapper-validation-action@v1
+
+      - name: Set up JDK
+        uses: actions/setup-java@v2
+        with:
+          java-version: '17'
+          distribution: 'zulu'
+
+      - name : Build with Gradle
+        run: |
+          export BUILD_NUMBER=${{ github.run_number }}
+          ./gradlew build --no-daemon --stacktrace
+
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: Chameleon-${{ github.run_number }}
+          path: build/libs/*.jar
