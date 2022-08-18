@@ -3,6 +3,7 @@
   "id": "chameleon-dock",
   "version": "${version}",
   "name": "Chameleon",
+  "description": "Change Minecraft's Dock Icon on macOS",
   "authors": [ "LemonCaramel" ],
   "contributors": [
     "t3rminus"
