@@ -1,21 +1,39 @@
 {
   "schemaVersion": 1,
-  "id": "fix-mc248936",
+  "id": "chameleon-dock",
   "version": "${version}",
-  "name": "Fix MC-248936",
-  "description": "Fix MC-248936",
+  "name": "Chameleon",
+  "description": "Change Minecraft's Dock Icon on macOS",
   "authors": [ "LemonCaramel" ],
+  "contributors": [
+    "t3rminus"
+  ],
   "contact": {
-    "website": "https://caramel.moe",
-    "repo": "https://github.com/LemonCaramel/Fix-MC248936"
+    "email": "admin@caramel.moe",
+    "homepage": "https://www.curseforge.com/minecraft/mc-mods/chameleon-dock",
+    "sources": "https://github.com/LemonCaramel/Chameleon",
+    "issues": "https://github.com/LemonCaramel/Chameleon/issues"
   },
+  "icon": "icon.png",
   "license": "MIT",
   "environment": "client",
-  "entrypoints": { "main": [ "moe.caramel.fix248936.Main" ] },
-  "mixins": [ "fix248936.mixins.json" ],
+  "entrypoints": {
+    "main": [ "moe.caramel.chameleon.Main" ],
+    "modmenu": [ "moe.caramel.chameleon.util.ModMenuImpl" ]
+  },
+  "mixins": [ "chameleon-dock.mixins.json" ],
+  "accessWidener": "chameleon-dock.accesswidener",
   "depends": {
-    "fabricloader": ">=0.12.0",
-    "minecraft": ">=1.16.4",
-    "java": ">=11"
+    "fabric-command-api-v2": "*",
+    "fabricloader": ">=0.14.6",
+    "minecraft": ">=1.19",
+    "java": ">=17"
+  },
+  "custom": {
+    "modupdater": {
+      "strategy": "curseforge",
+      "projectID": 597393,
+      "strict": false
+    }
   }
 }

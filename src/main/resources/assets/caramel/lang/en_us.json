@@ -1,5 +1,12 @@
 {
-  "caramel.fix248936.change.done": "Successfully changed the icon to \"%s\".",
-  "caramel.fix248936.change.404": "Icon named \"%s\" does not exist.",
-  "caramel.fix248936.change.exception": "An error occurred while applying changes."
+  "modmenu.descriptionTranslation.chameleon-dock": "Changes the dock icon of macOS",
+  "caramel.chameleon.modmenu.title": "Chameleon Setting",
+
+  "caramel.chameleon.resetToast.title": "Chameleon settings was reset",
+  "caramel.chameleon.resetToast.desc": "Changed to default icon due to an error.",
+
+  "caramel.chameleon.change.done": "Successfully changed the icon to \"%s\".",
+  "caramel.chameleon.change.404": "Icon named \"%s\" does not exist.",
+  "caramel.chameleon.change.exception.title": "Error!",
+  "caramel.chameleon.change.exception": "An error occurred while applying changes."
 }

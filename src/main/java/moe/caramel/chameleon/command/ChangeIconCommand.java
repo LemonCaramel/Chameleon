@@ -1,29 +1,27 @@
-package moe.caramel.fix248936.command;
+package moe.caramel.chameleon.command;
 
+import com.mojang.blaze3d.platform.MacosUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
-import moe.caramel.fix248936.util.MacOsUtil;
-import moe.caramel.fix248936.util.ModConfig;
-import net.fabricmc.fabric.api.client.command.v1.FabricClientCommandSource;
+import moe.caramel.chameleon.util.ModConfig;
+import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.Minecraft;
 import net.minecraft.commands.arguments.ResourceLocationArgument;
-import net.minecraft.network.chat.TranslatableComponent;
+import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import org.jetbrains.annotations.NotNull;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.NoSuchElementException;
 
-import static net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.argument;
-import static net.fabricmc.fabric.api.client.command.v1.ClientCommandManager.literal;
-import static net.minecraft.resources.ResourceLocation.tryParse;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
+import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
 public final class ChangeIconCommand {
 
     private static final String ICON_NAME = "icon name";
     private static final SuggestionProvider<FabricClientCommandSource> SUGGEST = (context, builder) -> {
         final var client = Minecraft.getInstance();
-        for (final var resource : client.getResourceManager().listResources("icons", s -> tryParse(s) != null)) {
+        for (final var resource : ModConfig.GET_ICON_SET.apply(client)) {
             builder.suggest(resource.toString());
         }
         return builder.buildFuture();
@@ -37,15 +35,14 @@ public final class ChangeIconCommand {
                 final var resource = context.getArgument(ICON_NAME, ResourceLocation.class);
 
                 try {
-                    MacOsUtil.loadIcon(client.getResourceManager().getResource(resource).getInputStream());
-                    ModConfig.getInstance().iconLocation.update(null, resource);
-                    source.sendFeedback(new TranslatableComponent("caramel.fix248936.change.done", resource));
+                    ModConfig.changeIcon(client, resource);
+                    source.sendFeedback(Component.translatable("caramel.chameleon.change.done", resource));
                     return 0;
-                } catch (FileNotFoundException ignored) {
-                    source.sendError(new TranslatableComponent("caramel.fix248936.change.404", resource));
+                } catch (NoSuchElementException ignored) {
+                    source.sendError(Component.translatable("caramel.chameleon.change.404", resource));
                     return -1;
                 } catch (IOException exception) {
-                    source.sendError(new TranslatableComponent("caramel.fix248936.change.exception"));
+                    source.sendError(Component.translatable("caramel.chameleon.change.exception", resource));
                     exception.printStackTrace();
                     return -1;
                 }

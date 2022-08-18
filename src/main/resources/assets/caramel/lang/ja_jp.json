@@ -1,5 +1,12 @@
 {
-  "caramel.fix248936.change.done": "アイコンを \"%s\"に変更しました。",
-  "caramel.fix248936.change.404": "\"%s\"という名前のアイコンが見つかりません。",
-  "caramel.fix248936.change.exception": "アイコンの変更中にエラーが発生しました。"
+  "modmenu.descriptionTranslation.chameleon-dock": "macOSでドックに表示されるMinecraftアイコンを変更します。",
+  "caramel.chameleon.modmenu.title": "Chameleon 設定",
+
+  "caramel.chameleon.resetToast.title": "Chameleon設定が初期化された",
+  "caramel.chameleon.resetToast.desc": "エラーにより基本アイコンに変更されました。",
+
+  "caramel.chameleon.change.done": "アイコンを \"%s\"に変更しました。",
+  "caramel.chameleon.change.404": "\"%s\"という名前のアイコンが見つかりません。",
+  "caramel.chameleon.change.exception.title": "エラー！",
+  "caramel.chameleon.change.exception": "アイコンの変更中にエラーが発生しました。"
 }
