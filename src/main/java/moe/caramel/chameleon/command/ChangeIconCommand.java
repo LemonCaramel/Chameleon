@@ -1,6 +1,5 @@
 package moe.caramel.chameleon.command;
 
-import com.mojang.blaze3d.platform.MacosUtil;
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
 import moe.caramel.chameleon.util.ModConfig;
@@ -20,8 +19,8 @@ public final class ChangeIconCommand {
 
     private static final String ICON_NAME = "icon name";
     private static final SuggestionProvider<FabricClientCommandSource> SUGGEST = (context, builder) -> {
-        final var client = Minecraft.getInstance();
-        for (final var resource : ModConfig.GET_ICON_SET.apply(client)) {
+        final Minecraft client = Minecraft.getInstance();
+        for (final ResourceLocation resource : ModConfig.GET_ICON_SET.apply(client)) {
             builder.suggest(resource.toString());
         }
         return builder.buildFuture();
@@ -30,9 +29,9 @@ public final class ChangeIconCommand {
     public static void register(@NotNull final CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(literal("changeicon").then(
             argument(ICON_NAME, ResourceLocationArgument.id()).suggests(SUGGEST).executes(context -> {
-                final var client = Minecraft.getInstance();
-                final var source = context.getSource();
-                final var resource = context.getArgument(ICON_NAME, ResourceLocation.class);
+                final Minecraft client = Minecraft.getInstance();
+                final FabricClientCommandSource source = context.getSource();
+                final ResourceLocation resource = context.getArgument(ICON_NAME, ResourceLocation.class);
 
                 try {
                     ModConfig.changeIcon(client, resource);

@@ -9,6 +9,6 @@ public final class ModMenuImpl implements ModMenuApi {
 
     @Override
     public ConfigScreenFactory<? extends Screen> getModConfigScreenFactory() {
-        return (parent) -> new ChangeDockIconScreen(parent);
+        return ChangeDockIconScreen::new;
     }
 }
