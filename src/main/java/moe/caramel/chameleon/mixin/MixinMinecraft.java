@@ -3,11 +3,13 @@ package moe.caramel.chameleon.mixin;
 import com.mojang.blaze3d.platform.MacosUtil;
 import moe.caramel.chameleon.Main;
 import moe.caramel.chameleon.util.ModConfig;
+import moe.caramel.chameleon.util.ResourceIo;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.main.GameConfig;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
 import org.spongepowered.asm.mixin.Mixin;
@@ -31,10 +33,11 @@ public abstract class MixinMinecraft {
         method = "<init>",
         at = @At(
             value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/platform/MacosUtil;loadIcon(Ljava/io/InputStream;)V"
+            target = "Lcom/mojang/blaze3d/platform/MacosUtil;loadIcon(Lnet/minecraft/server/packs/resources/IoSupplier;)V"
         )
     )
-    public void dockIconLoadCancel(InputStream stream) throws IOException {
+    public void dockIconLoadCancel(IoSupplier<InputStream> ioSupplier) throws IOException {
+        final InputStream stream = ioSupplier.get();
         stream.close(); // No
     }
 
@@ -42,7 +45,7 @@ public abstract class MixinMinecraft {
     @Inject(method = "<init>", at = @At(value = "TAIL"))
     public void loadMinecraftIcon(GameConfig gameConfig, CallbackInfo ci) throws IOException {
         if (!Minecraft.ON_OSX) return;
-        final var config = ModConfig.getInstance();
+        final ModConfig config = ModConfig.getInstance();
 
         final ResourceLocation location = config.iconLocation.get();
         Optional<Resource> resource = this.getResourceManager().getResource(location);
@@ -56,7 +59,7 @@ public abstract class MixinMinecraft {
             resource = this.getResourceManager().getResource(ORIGINAL_ICON);
         }
         if (resource.isPresent()) { // um..
-            MacosUtil.loadIcon(resource.get().open());
+            MacosUtil.loadIcon(ResourceIo.create(resource.get()));
         }
     }
 }

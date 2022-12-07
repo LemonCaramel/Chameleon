@@ -65,12 +65,13 @@ public final class ModConfig extends Settings<ModConfig> {
     /* ======================================== */
     /**
      * Apply and save icon setting.
+     *
      * @param client Minecraft object
      * @param icon Icon Resource location
      * @throws IOException InputStream open failed
      */
     public static void changeIcon(Minecraft client, ResourceLocation icon) throws IOException {
-        MacosUtil.loadIcon(client.getResourceManager().getResource(icon).get().open());
+        MacosUtil.loadIcon(ResourceIo.create(client.getResourceManager().getResource(icon).get()));
         ModConfig.getInstance().iconLocation.update(null, icon);
     }
     /* ======================================== */

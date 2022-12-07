@@ -1,6 +1,5 @@
 package moe.caramel.chameleon.gui;
 
-import com.mojang.blaze3d.platform.MacosUtil;
 import com.mojang.blaze3d.vertex.PoseStack;
 import moe.caramel.chameleon.util.ModConfig;
 import net.minecraft.client.Minecraft;
@@ -29,7 +28,7 @@ public final class ChangeDockIconScreen extends Screen {
     protected void init() {
         this.iconSelectionList = new IconSelectionList(this.minecraft);
         this.addWidget(this.iconSelectionList);
-        this.addRenderableWidget(new Button(this.width / 2 - 100, this.height - 30, 200, 20, CommonComponents.GUI_DONE, (button) -> {
+        this.addRenderableWidget(Button.builder(CommonComponents.GUI_DONE, (button) -> {
             final IconSelectionList.Entry entry = this.iconSelectionList.getSelected();
             if (entry != null && !ModConfig.getInstance().iconLocation.get().equals(entry.icon)) {
                 try {
@@ -44,7 +43,7 @@ public final class ChangeDockIconScreen extends Screen {
                 }
             }
             this.minecraft.setScreen(this.lastScreen);
-        }));
+        }).bounds(this.width / 2 - 100, this.height - 30, 200, 20).build());
     }
 
     @Override
