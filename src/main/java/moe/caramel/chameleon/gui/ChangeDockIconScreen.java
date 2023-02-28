@@ -89,7 +89,7 @@ public final class ChangeDockIconScreen extends Screen {
         }
 
         @Override
-        protected boolean isFocused() {
+        public boolean isFocused() {
             return ChangeDockIconScreen.this.getFocused() == this;
         }
 
@@ -113,7 +113,7 @@ public final class ChangeDockIconScreen extends Screen {
                 final String iconLocation = this.icon.toString();
                 ChangeDockIconScreen.this.font.drawShadow(
                     poseStack, iconLocation,
-                    IconSelectionList.this.width / 2 - ChangeDockIconScreen.this.font.width(iconLocation) / 2,
+                    IconSelectionList.this.width / 2.0f - ChangeDockIconScreen.this.font.width(iconLocation) / 2.0f,
                     j + 3.5f, COLOR_WHITE, true
                 );
             }
