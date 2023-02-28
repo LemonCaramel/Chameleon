@@ -5,8 +5,10 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.dedicated.Settings;
+import net.minecraft.server.packs.resources.IoSupplier;
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 import java.nio.file.Path;
 import java.util.Objects;
 import java.util.Properties;
@@ -16,7 +18,8 @@ import java.util.function.Function;
 public final class ModConfig extends Settings<ModConfig> {
 
     private static final Path MOD_CONFIG = new File("./config/caramel.chameleon.properties").toPath();
-    public static final ResourceLocation ORIGINAL_ICON = new ResourceLocation("icons/minecraft.icns");
+    public static final ResourceLocation ORIGINAL_MAC_ICON = new ResourceLocation("icons/minecraft.icns");
+    public static final ResourceLocation ORIGINAL_WIN_ICON = new ResourceLocation("icons/icon_32x32.png");
     public static final Function<Minecraft, Set<ResourceLocation>> GET_ICON_SET = client -> {
         return client.getResourceManager().listResources("icons", Objects::nonNull).keySet();
     };
@@ -50,8 +53,10 @@ public final class ModConfig extends Settings<ModConfig> {
      */
     private ModConfig(Properties properties) {
         super(properties);
-        this.iconLocation = this.getMutable("icon-location", ResourceLocation::tryParse, ORIGINAL_ICON);
-
+        this.iconLocation = this.getMutable(
+            "icon-location", ResourceLocation::tryParse,
+            (Minecraft.ON_OSX ? ORIGINAL_MAC_ICON : ORIGINAL_WIN_ICON)
+        );
     }
     /* ======================================== */
 
@@ -71,7 +76,12 @@ public final class ModConfig extends Settings<ModConfig> {
      * @throws IOException InputStream open failed
      */
     public static void changeIcon(Minecraft client, ResourceLocation icon) throws IOException {
-        MacosUtil.loadIcon(ResourceIo.create(client.getResourceManager().getResource(icon).get()));
+        final IoSupplier<InputStream> iconSupplier = ResourceIo.create(client.getResourceManager().getResource(icon).get());
+        if (Minecraft.ON_OSX) {
+            MacosUtil.loadIcon(iconSupplier);
+        } else {
+            client.getWindow().setIcon(iconSupplier, iconSupplier);
+        }
         ModConfig.getInstance().iconLocation.update(null, icon);
     }
     /* ======================================== */

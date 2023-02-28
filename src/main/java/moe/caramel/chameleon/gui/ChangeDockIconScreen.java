@@ -65,7 +65,8 @@ public final class ChangeDockIconScreen extends Screen {
                 32, ChangeDockIconScreen.this.height - 40, 20
             );
 
-            for (final var resource : ModConfig.GET_ICON_SET.apply(client)) {
+            for (final ResourceLocation resource : ModConfig.GET_ICON_SET.apply(client)) {
+                if (!Minecraft.ON_OSX && resource.getPath().endsWith(".icns")) continue;
                 final Entry entry = new Entry(resource);
                 this.addEntry(entry);
                 if (ModConfig.getInstance().iconLocation.get().equals(resource)) {

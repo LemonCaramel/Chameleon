@@ -1,6 +1,7 @@
 package moe.caramel.chameleon.mixin;
 
 import com.mojang.blaze3d.platform.MacosUtil;
+import com.mojang.blaze3d.platform.Window;
 import moe.caramel.chameleon.Main;
 import moe.caramel.chameleon.util.ModConfig;
 import moe.caramel.chameleon.util.ResourceIo;
@@ -12,6 +13,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.resources.IoSupplier;
 import net.minecraft.server.packs.resources.Resource;
 import net.minecraft.server.packs.resources.ResourceManager;
+import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.injection.At;
@@ -22,29 +24,38 @@ import java.io.InputStream;
 import java.util.Optional;
 import java.io.IOException;
 
-import static moe.caramel.chameleon.util.ModConfig.ORIGINAL_ICON;
+import static moe.caramel.chameleon.util.ModConfig.*;
 
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
 
     @Shadow public abstract ResourceManager getResourceManager();
+    @Shadow @Final private Window window;
 
     @Redirect(
-        method = "<init>",
-        at = @At(
+        method = "<init>", at = @At(
             value = "INVOKE",
             target = "Lcom/mojang/blaze3d/platform/MacosUtil;loadIcon(Lnet/minecraft/server/packs/resources/IoSupplier;)V"
         )
     )
-    public void dockIconLoadCancel(IoSupplier<InputStream> ioSupplier) throws IOException {
-        final InputStream stream = ioSupplier.get();
-        stream.close(); // No
+    public void loadCancelMac(IoSupplier<InputStream> ioSupplier) throws IOException {
+        ioSupplier.get().close(); // No
+    }
+
+    @Redirect(
+        method = "<init>", at = @At(
+            value = "INVOKE",
+            target = "Lcom/mojang/blaze3d/platform/Window;setIcon(Lnet/minecraft/server/packs/resources/IoSupplier;Lnet/minecraft/server/packs/resources/IoSupplier;)V"
+        )
+    )
+    public void loadCancelWin(Window instance, IoSupplier<InputStream> smallSupplier, IoSupplier<InputStream> bigSupplier) throws IOException {
+        smallSupplier.get().close(); // Nono
+        bigSupplier.get().close(); // Nonono
     }
 
     // Run after all resources are loaded
     @Inject(method = "<init>", at = @At(value = "TAIL"))
     public void loadMinecraftIcon(GameConfig gameConfig, CallbackInfo ci) throws IOException {
-        if (!Minecraft.ON_OSX) return;
         final ModConfig config = ModConfig.getInstance();
 
         final ResourceLocation location = config.iconLocation.get();
@@ -55,11 +66,17 @@ public abstract class MixinMinecraft {
                 Component.translatable("caramel.chameleon.resetToast.title"),
                 Component.translatable("caramel.chameleon.resetToast.desc")
             ));
-            config.iconLocation.update(null, ORIGINAL_ICON);
-            resource = this.getResourceManager().getResource(ORIGINAL_ICON);
+            final ResourceLocation icon = (Minecraft.ON_OSX ? ORIGINAL_MAC_ICON : ORIGINAL_WIN_ICON);
+            config.iconLocation.update(null, icon);
+            resource = this.getResourceManager().getResource(icon);
         }
         if (resource.isPresent()) { // um..
-            MacosUtil.loadIcon(ResourceIo.create(resource.get()));
+            final IoSupplier<InputStream> iconSupplier = ResourceIo.create(resource.get());
+            if (Minecraft.ON_OSX) {
+                MacosUtil.loadIcon(iconSupplier);
+            } else {
+                this.window.setIcon(iconSupplier, iconSupplier);
+            }
         }
     }
 }
