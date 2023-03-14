@@ -65,7 +65,8 @@ public final class ChangeDockIconScreen extends Screen {
                 32, ChangeDockIconScreen.this.height - 40, 20
             );
 
-            for (final var resource : ModConfig.GET_ICON_SET.apply(client)) {
+            for (final ResourceLocation resource : ModConfig.GET_ICON_SET.apply(client)) {
+                if (!Minecraft.ON_OSX && resource.getPath().endsWith(".icns")) continue;
                 final Entry entry = new Entry(resource);
                 this.addEntry(entry);
                 if (ModConfig.getInstance().iconLocation.get().equals(resource)) {
@@ -89,7 +90,7 @@ public final class ChangeDockIconScreen extends Screen {
         }
 
         @Override
-        protected boolean isFocused() {
+        public boolean isFocused() {
             return ChangeDockIconScreen.this.getFocused() == this;
         }
 
@@ -113,7 +114,7 @@ public final class ChangeDockIconScreen extends Screen {
                 final String iconLocation = this.icon.toString();
                 ChangeDockIconScreen.this.font.drawShadow(
                     poseStack, iconLocation,
-                    IconSelectionList.this.width / 2 - ChangeDockIconScreen.this.font.width(iconLocation) / 2,
+                    IconSelectionList.this.width / 2.0f - ChangeDockIconScreen.this.font.width(iconLocation) / 2.0f,
                     j + 3.5f, COLOR_WHITE, true
                 );
             }
