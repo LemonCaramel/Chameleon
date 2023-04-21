@@ -21,12 +21,9 @@ dependencies {
     mappings(loom.officialMojangMappings())
     modImplementation("net.fabricmc", "fabric-loader", property("loader_version") as String)
     modImplementation(fabricApi.module("fabric-command-api-v2", property("fabric_version") as String))
+    modImplementation(fabricApi.module("fabric-resource-loader-v0", property("fabric_version") as String))
 
-    modImplementation("com.terraformersmc", "modmenu", property("mod-menu_version") as String)
-}
-
-loom {
-    accessWidenerPath.set( file("src/main/resources/chameleon-dock.accesswidener") )
+    modCompileOnly("com.terraformersmc", "modmenu", property("mod-menu_version") as String) // TODO 1.20 (modImplementation)
 }
 
 tasks{

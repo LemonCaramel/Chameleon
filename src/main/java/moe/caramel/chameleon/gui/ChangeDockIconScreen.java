@@ -1,8 +1,8 @@
 package moe.caramel.chameleon.gui;
 
-import com.mojang.blaze3d.vertex.PoseStack;
 import moe.caramel.chameleon.util.ModConfig;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.Button;
 import net.minecraft.client.gui.components.ObjectSelectionList;
 import net.minecraft.client.gui.components.toasts.SystemToast;
@@ -10,6 +10,7 @@ import net.minecraft.client.gui.screens.Screen;
 import net.minecraft.network.chat.CommonComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
+import org.jetbrains.annotations.NotNull;
 import java.io.IOException;
 
 public final class ChangeDockIconScreen extends Screen {
@@ -47,10 +48,10 @@ public final class ChangeDockIconScreen extends Screen {
     }
 
     @Override
-    public void render(PoseStack poseStack, int mouseX, int mouseY, float delta) {
-        this.iconSelectionList.render(poseStack, mouseX, mouseY, delta);
-        drawCenteredString(poseStack, this.font, this.getTitle(), this.width / 2, 12, COLOR_WHITE);
-        super.render(poseStack, mouseX, mouseY, delta);
+    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        this.iconSelectionList.render(graphics, mouseX, mouseY, delta);
+        graphics.drawCenteredString(this.font, this.getTitle(), this.width / 2, 12, COLOR_WHITE);
+        super.render(graphics, mouseX, mouseY, delta);
     }
 
 
@@ -108,14 +109,14 @@ public final class ChangeDockIconScreen extends Screen {
 
             @Override
             public void render(
-                PoseStack poseStack, int currentCount, int j, int k, int l, int m,
+                GuiGraphics graphics, int index, int y, int x, int rowWidth, int rowHeight,
                 int mouseX, int mouseY, boolean hover, float delta
             ) {
                 final String iconLocation = this.icon.toString();
-                ChangeDockIconScreen.this.font.drawShadow(
-                    poseStack, iconLocation,
-                    IconSelectionList.this.width / 2.0f - ChangeDockIconScreen.this.font.width(iconLocation) / 2.0f,
-                    j + 3.5f, COLOR_WHITE, true
+                graphics.drawString(
+                    ChangeDockIconScreen.this.font, iconLocation,
+                    IconSelectionList.this.width / 2 - ChangeDockIconScreen.this.font.width(iconLocation) / 2,
+                    y + 4, COLOR_WHITE, false
                 );
             }
 
@@ -127,7 +128,7 @@ public final class ChangeDockIconScreen extends Screen {
             }
 
             @Override
-            public Component getNarration() {
+            public @NotNull Component getNarration() {
                 return Component.literal(this.icon.toString());
             }
         }

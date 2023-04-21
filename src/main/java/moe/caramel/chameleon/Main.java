@@ -1,11 +1,17 @@
 package moe.caramel.chameleon;
 
 import com.google.common.collect.Queues;
-import moe.caramel.chameleon.command.ChangeIconCommand;
+import moe.caramel.chameleon.command.ChameleonCommand;
 import moe.caramel.chameleon.util.ModConfig;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.client.command.v2.ClientCommandRegistrationCallback;
+import net.fabricmc.fabric.api.resource.ResourceManagerHelper;
+import net.fabricmc.fabric.api.resource.SimpleSynchronousResourceReloadListener;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.Toast;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.packs.PackType;
+import net.minecraft.server.packs.resources.ResourceManager;
 import java.util.Queue;
 
 public final class Main implements ModInitializer {
@@ -22,7 +28,22 @@ public final class Main implements ModInitializer {
 
         /* Register Command */
         ClientCommandRegistrationCallback.EVENT.register((dispatcher, context) -> {
-            ChangeIconCommand.register(dispatcher);
+            ChameleonCommand.register(dispatcher);
+        });
+
+        /* Watch Reload Resources */
+        ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
+            @Override
+            public ResourceLocation getFabricId() {
+                return new ResourceLocation("caramel", "chameleon-dock");
+            }
+
+            @Override
+            public void onResourceManagerReload(ResourceManager manager) {
+                while (!INIT_TOAST_QUEUE.isEmpty()) {
+                    Minecraft.getInstance().getToasts().addToast(INIT_TOAST_QUEUE.poll());
+                }
+            }
         });
     }
 }
