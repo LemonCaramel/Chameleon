@@ -1,9 +1,9 @@
 package moe.caramel.chameleon.mixin;
 
 import com.mojang.blaze3d.platform.IconSet;
-import com.mojang.blaze3d.platform.MacosUtil;
 import com.mojang.blaze3d.platform.Window;
 import moe.caramel.chameleon.Main;
+import moe.caramel.chameleon.util.MacosUtil;
 import moe.caramel.chameleon.util.ModConfig;
 import moe.caramel.chameleon.util.ResourceIo;
 import net.minecraft.client.Minecraft;

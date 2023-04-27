@@ -1,6 +1,5 @@
 package moe.caramel.chameleon.util;
 
-import com.mojang.blaze3d.platform.MacosUtil;
 import com.mojang.blaze3d.platform.NativeImage;
 import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;

@@ -4,6 +4,7 @@
   "package": "moe.caramel.chameleon.mixin",
   "compatibilityLevel": "JAVA_17",
   "client": [
+    "MixinChatComponent",
     "MixinMinecraft"
   ],
   "injectors": {
