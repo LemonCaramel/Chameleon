@@ -29,16 +29,20 @@ public final class ModConfig extends Settings<ModConfig> {
     private static final Path MOD_CONFIG = new File("./config/caramel.chameleon.properties").toPath();
     private static final int CURRENT_CONFIG_VERSION = 1;
     public static final ResourceLocation ORIGINAL_MAC_ICON = new ResourceLocation("icons/minecraft.icns");
-    public static final ResourceLocation ORIGINAL_WIN_ICON = new ResourceLocation("icons/icon_48x48.png");
+    public static final ResourceLocation ORIGINAL_WIN_ICON = new ResourceLocation("icons/icon_128x128.png");
     public static final Map<ResourceLocation, String[]> VANILLA_ICON_SET = new Object2ObjectOpenHashMap<>();
     static {
         VANILLA_ICON_SET.put(ORIGINAL_MAC_ICON, new String[]{ "icons", "minecraft.icns" });
         VANILLA_ICON_SET.put(new ResourceLocation("icons/icon_16x16.png"), new String[]{ "icons", "icon_16x16.png" });
         VANILLA_ICON_SET.put(new ResourceLocation("icons/icon_32x32.png"), new String[]{ "icons", "icon_32x32.png" });
-        VANILLA_ICON_SET.put(ORIGINAL_WIN_ICON, new String[]{ "icons", "icon_48x48.png" });
+        VANILLA_ICON_SET.put(new ResourceLocation("icons/icon_48x48.png"), new String[]{ "icons", "icon_48x48.png" });
+        VANILLA_ICON_SET.put(ORIGINAL_WIN_ICON, new String[]{ "icons", "icon_128x128.png" });
+        VANILLA_ICON_SET.put(new ResourceLocation("icons/icon_256x256.png"), new String[]{ "icons", "icon_256x256.png" });
         VANILLA_ICON_SET.put(new ResourceLocation("snapshot/icons/icon_16x16.png"), new String[]{ "icons", "snapshot", "icon_16x16.png" });
         VANILLA_ICON_SET.put(new ResourceLocation("snapshot/icons/icon_32x32.png"), new String[]{ "icons", "snapshot", "icon_32x32.png" });
         VANILLA_ICON_SET.put(new ResourceLocation("snapshot/icons/icon_48x48.png"), new String[]{ "icons", "snapshot", "icon_48x48.png" });
+        VANILLA_ICON_SET.put(new ResourceLocation("snapshot/icons/icon_128x128.png"), new String[]{ "icons", "snapshot", "icon_128x128.png" });
+        VANILLA_ICON_SET.put(new ResourceLocation("snapshot/icons/icon_256x256.png"), new String[]{ "icons", "snapshot", "icon_256x256.png" });
     }
     public static final Function<Minecraft, Set<ResourceLocation>> GET_ICON_SET = client -> {
         final Set<ResourceLocation> iconSet = new ObjectOpenHashSet<>();
