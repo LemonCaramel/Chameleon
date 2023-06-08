@@ -11,7 +11,7 @@ Introduction
 - This mod allows you to change the Dock icon in macOS on Minecraft 1.19 and later clients. (Starting from version 3.2.0, Windows OS is also unstable but supports it.)
 - This mod provides icon pack containing 9 icons for players who run on macOS Big Sur or above.
   ![icon packs](https://user-images.githubusercontent.com/45729082/159682087-7deeb3ec-5d9a-42b6-a0ce-c6fd502a4017.png)
-- You can change Dock icon using client command `/changeicon <icon name>` or using [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu). And add icon using **Custom Resource Pack**, if you want.
+- You can change Dock icon using client command `/chameleon <icon name>` or using [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu). And add icon using **Custom Resource Pack**, if you want.
   ![preview](https://user-images.githubusercontent.com/45729082/159741680-813d91b8-82e2-4d7a-bead-9cd1402e4710.gif)
 
 

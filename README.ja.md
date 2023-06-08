@@ -11,7 +11,7 @@
 - このモードはMinecraft1.19以上のクライアントでmacOSのDockアイコンを変更できるようにします。 (3.2.0バージョンからWindows OSも不安定ですが、サポートします。)
 - macOS Big Sur以上のOSをお使いになっているプレイヤーさんのため、 ９つのアイコンが含まれているアイコンパックも用意されています。
   ![icon packs](https://user-images.githubusercontent.com/45729082/159682087-7deeb3ec-5d9a-42b6-a0ce-c6fd502a4017.png)
-- クライアントコマンド `/changeicon <icon name>` を使用するか、 [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu)を使用してDockのアイコンの変更ができ、ご所望の場合 **カスタムリソースパック** を通してアイコンを追加できます。
+- クライアントコマンド `/chameleon <icon name>` を使用するか、 [Mod Menu](https://www.curseforge.com/minecraft/mc-mods/modmenu)を使用してDockのアイコンの変更ができ、ご所望の場合 **カスタムリソースパック** を通してアイコンを追加できます。
   ![preview](https://user-images.githubusercontent.com/45729082/159741680-813d91b8-82e2-4d7a-bead-9cd1402e4710.gif)
 
 
