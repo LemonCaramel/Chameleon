@@ -1,5 +1,0 @@
-accessWidener v1 named
-
-# for Toast Queue
-accessible class net/minecraft/client/ResourceLoadStateTracker$ReloadState
-accessible field net/minecraft/client/ResourceLoadStateTracker$ReloadState reloadReason Lnet/minecraft/client/ResourceLoadStateTracker$ReloadReason;

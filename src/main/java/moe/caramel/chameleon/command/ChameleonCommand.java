@@ -2,6 +2,7 @@ package moe.caramel.chameleon.command;
 
 import com.mojang.brigadier.CommandDispatcher;
 import com.mojang.brigadier.suggestion.SuggestionProvider;
+import moe.caramel.chameleon.gui.ChangeDockIconScreen;
 import moe.caramel.chameleon.util.ModConfig;
 import net.fabricmc.fabric.api.client.command.v2.FabricClientCommandSource;
 import net.minecraft.client.Minecraft;
@@ -15,7 +16,7 @@ import java.util.NoSuchElementException;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.argument;
 import static net.fabricmc.fabric.api.client.command.v2.ClientCommandManager.literal;
 
-public final class ChangeIconCommand {
+public final class ChameleonCommand {
 
     private static final String ICON_NAME = "icon name";
     private static final SuggestionProvider<FabricClientCommandSource> SUGGEST = (context, builder) -> {
@@ -27,7 +28,11 @@ public final class ChangeIconCommand {
     };
 
     public static void register(@NotNull final CommandDispatcher<FabricClientCommandSource> dispatcher) {
-        dispatcher.register(literal("changeicon").then(
+        dispatcher.register(literal("chameleon").executes(context -> {
+            final Minecraft client = Minecraft.getInstance();
+            client.tell(() -> client.setScreen(new ChangeDockIconScreen(null)));
+            return 0;
+        }).then(
             argument(ICON_NAME, ResourceLocationArgument.id()).suggests(SUGGEST).executes(context -> {
                 final Minecraft client = Minecraft.getInstance();
                 final FabricClientCommandSource source = context.getSource();
