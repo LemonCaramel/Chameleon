@@ -10,7 +10,7 @@
   ],
   "contact": {
     "email": "admin@caramel.moe",
-    "homepage": "https://www.curseforge.com/minecraft/mc-mods/chameleon-dock",
+    "homepage": "https://modrinth.com/mod/chameleon",
     "sources": "https://github.com/LemonCaramel/Chameleon",
     "issues": "https://github.com/LemonCaramel/Chameleon/issues"
   },
@@ -26,7 +26,7 @@
     "fabric-command-api-v2": "*",
     "fabric-resource-loader-v0": "*",
     "fabricloader": ">=0.14.21",
-    "minecraft": "1.20.*",
+    "minecraft": ">=1.20.2",
     "java": ">=17"
   },
   "custom": {
@@ -34,6 +34,9 @@
       "strategy": "curseforge",
       "projectID": 597393,
       "strict": false
+    },
+    "modmenu": {
+      "update_checker": true
     }
   }
 }

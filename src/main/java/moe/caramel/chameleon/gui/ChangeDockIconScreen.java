@@ -34,7 +34,7 @@ public final class ChangeDockIconScreen extends Screen {
             if (entry != null && !ModConfig.getInstance().iconLocation.get().equals(entry.icon)) {
                 try {
                     ModConfig.changeIcon(this.minecraft, entry.icon);
-                } catch (IOException exception) {
+                } catch (final IOException exception) {
                     exception.printStackTrace();
                     this.minecraft.getToasts().addToast(new SystemToast(
                         SystemToast.SystemToastIds.PACK_LOAD_FAILURE,
@@ -49,9 +49,9 @@ public final class ChangeDockIconScreen extends Screen {
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+        super.render(graphics, mouseX, mouseY, delta);
         this.iconSelectionList.render(graphics, mouseX, mouseY, delta);
         graphics.drawCenteredString(this.font, this.getTitle(), this.width / 2, 12, COLOR_WHITE);
-        super.render(graphics, mouseX, mouseY, delta);
     }
 
 
@@ -65,6 +65,7 @@ public final class ChangeDockIconScreen extends Screen {
                 client, ChangeDockIconScreen.this.width, ChangeDockIconScreen.this.height,
                 32, ChangeDockIconScreen.this.height - 40, 20
             );
+            this.setRenderBackground(this.minecraft.level == null);
 
             for (final ResourceLocation resource : ModConfig.GET_ICON_SET.apply(client)) {
                 if (!Minecraft.ON_OSX && resource.getPath().endsWith(".icns")) continue;
@@ -103,7 +104,7 @@ public final class ChangeDockIconScreen extends Screen {
 
             private final ResourceLocation icon;
 
-            public Entry(ResourceLocation icon) {
+            public Entry(final ResourceLocation icon) {
                 this.icon = icon;
             }
 
