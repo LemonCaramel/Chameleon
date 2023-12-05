@@ -60,7 +60,7 @@ public abstract class MixinMinecraft {
             Optional<Resource> resource = this.getResourceManager().getResource(location);
             if (resource.isEmpty()) {
                 Main.INIT_TOAST_QUEUE.add(new SystemToast(
-                    SystemToast.SystemToastIds.PACK_LOAD_FAILURE,
+                    SystemToast.SystemToastId.PACK_LOAD_FAILURE,
                     Component.translatable("caramel.chameleon.resetToast.title"),
                     Component.translatable("caramel.chameleon.resetToast.desc")
                 ));

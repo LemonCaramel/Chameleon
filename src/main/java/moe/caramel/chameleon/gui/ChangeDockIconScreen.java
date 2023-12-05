@@ -37,7 +37,7 @@ public final class ChangeDockIconScreen extends Screen {
                 } catch (final IOException exception) {
                     exception.printStackTrace();
                     this.minecraft.getToasts().addToast(new SystemToast(
-                        SystemToast.SystemToastIds.PACK_LOAD_FAILURE,
+                        SystemToast.SystemToastId.PACK_LOAD_FAILURE,
                         Component.translatable("caramel.chameleon.change.exception.title"),
                         Component.translatable("caramel.chameleon.change.exception")
                     ));
@@ -61,10 +61,7 @@ public final class ChangeDockIconScreen extends Screen {
     private final class IconSelectionList extends ObjectSelectionList<IconSelectionList.Entry> {
 
         public IconSelectionList(Minecraft client) {
-            super(
-                client, ChangeDockIconScreen.this.width, ChangeDockIconScreen.this.height,
-                32, ChangeDockIconScreen.this.height - 40, 20
-            );
+            super(client, ChangeDockIconScreen.this.width, ChangeDockIconScreen.this.height - 70, 32, 20);
             this.setRenderBackground(this.minecraft.level == null);
 
             for (final ResourceLocation resource : ModConfig.GET_ICON_SET.apply(client)) {
