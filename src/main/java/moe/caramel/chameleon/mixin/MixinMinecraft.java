@@ -1,5 +1,6 @@
 package moe.caramel.chameleon.mixin;
 
+import static moe.caramel.chameleon.util.ModConfig.*;
 import com.mojang.blaze3d.platform.IconSet;
 import com.mojang.blaze3d.platform.Window;
 import moe.caramel.chameleon.Main;
@@ -28,13 +29,10 @@ import java.util.Objects;
 import java.util.Optional;
 import java.io.IOException;
 
-import static moe.caramel.chameleon.util.ModConfig.*;
-
 @Mixin(Minecraft.class)
 public abstract class MixinMinecraft {
 
     @Shadow public abstract ResourceManager getResourceManager();
-
     @Shadow @Final private VanillaPackResources vanillaPackResources;
 
     @Redirect(
@@ -43,11 +41,11 @@ public abstract class MixinMinecraft {
             target = "Lcom/mojang/blaze3d/platform/Window;setIcon(Lnet/minecraft/server/packs/PackResources;Lcom/mojang/blaze3d/platform/IconSet;)V"
         )
     )
-    private void ignoreInit(Window window, PackResources resources, IconSet iconSet) { }
+    private void ignoreInit(final Window window, final PackResources resources, final IconSet iconSet) { }
 
     // Run after all resources are loaded
     @Inject(method = "<init>", at = @At(value = "TAIL"))
-    public void loadMinecraftIcon(GameConfig gameConfig, CallbackInfo ci) throws IOException {
+    public void loadMinecraftIcon(final GameConfig gameConfig, final CallbackInfo ci) throws IOException {
         final ModConfig config = ModConfig.getInstance();
 
         final ResourceLocation location = config.iconLocation.get();

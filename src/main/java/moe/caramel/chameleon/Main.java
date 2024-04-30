@@ -39,7 +39,7 @@ public final class Main implements ModInitializer {
             }
 
             @Override
-            public void onResourceManagerReload(ResourceManager manager) {
+            public void onResourceManagerReload(final ResourceManager manager) {
                 while (!INIT_TOAST_QUEUE.isEmpty()) {
                     Minecraft.getInstance().getToasts().addToast(INIT_TOAST_QUEUE.poll());
                 }

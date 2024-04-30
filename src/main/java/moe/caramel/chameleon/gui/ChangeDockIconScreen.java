@@ -20,7 +20,7 @@ public final class ChangeDockIconScreen extends Screen {
     private final Screen lastScreen;
     private IconSelectionList iconSelectionList;
 
-    public ChangeDockIconScreen(Screen parent) {
+    public ChangeDockIconScreen(final Screen parent) {
         super(Component.translatable("caramel.chameleon.modmenu.title"));
         this.lastScreen = parent;
     }
@@ -48,7 +48,7 @@ public final class ChangeDockIconScreen extends Screen {
     }
 
     @Override
-    public void render(GuiGraphics graphics, int mouseX, int mouseY, float delta) {
+    public void render(final GuiGraphics graphics, final int mouseX, final int mouseY, final float delta) {
         super.render(graphics, mouseX, mouseY, delta);
         this.iconSelectionList.render(graphics, mouseX, mouseY, delta);
         graphics.drawCenteredString(this.font, this.getTitle(), this.width / 2, 12, COLOR_WHITE);
@@ -60,12 +60,14 @@ public final class ChangeDockIconScreen extends Screen {
      */
     private final class IconSelectionList extends ObjectSelectionList<IconSelectionList.Entry> {
 
-        public IconSelectionList(Minecraft client) {
+        public IconSelectionList(final Minecraft client) {
             super(client, ChangeDockIconScreen.this.width, ChangeDockIconScreen.this.height - 70, 32, 20);
-            this.setRenderBackground(this.minecraft.level == null);
 
             for (final ResourceLocation resource : ModConfig.GET_ICON_SET.apply(client)) {
-                if (!Minecraft.ON_OSX && resource.getPath().endsWith(".icns")) continue;
+                if (!Minecraft.ON_OSX && resource.getPath().endsWith(".icns")) {
+                    continue;
+                }
+
                 final Entry entry = new Entry(resource);
                 this.addEntry(entry);
                 if (ModConfig.getInstance().iconLocation.get().equals(resource)) {
@@ -107,8 +109,9 @@ public final class ChangeDockIconScreen extends Screen {
 
             @Override
             public void render(
-                GuiGraphics graphics, int index, int y, int x, int rowWidth, int rowHeight,
-                int mouseX, int mouseY, boolean hover, float delta
+                final GuiGraphics graphics, final int index,
+                final int y, final int x, final int rowWidth, final int rowHeight,
+                final int mouseX, final int mouseY, final boolean hover, final float delta
             ) {
                 final String iconLocation = this.icon.toString();
                 graphics.drawString(
@@ -119,10 +122,13 @@ public final class ChangeDockIconScreen extends Screen {
             }
 
             @Override
-            public boolean mouseClicked(double xPos, double yPos, int action) {
-                if (action != 0) return false;
-                IconSelectionList.this.setSelected(this);
-                return true;
+            public boolean mouseClicked(final double xPos, final double yPos, final int action) {
+                if (action != 0) {
+                    return false;
+                } else {
+                    IconSelectionList.this.setSelected(this);
+                    return true;
+                }
             }
 
             @Override
