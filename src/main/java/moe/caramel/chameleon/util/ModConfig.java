@@ -65,7 +65,10 @@ public final class ModConfig extends Settings<ModConfig> {
      * @return Mod config instance
      */
     public static ModConfig getInstance() {
-        if (instance == null) instance = new ModConfig();
+        if (instance == null) {
+            instance = new ModConfig();
+        }
+
         return instance;
     }
     /* ======================================== */
@@ -85,23 +88,29 @@ public final class ModConfig extends Settings<ModConfig> {
     /**
      * Mod config constructor
      */
-    private ModConfig(Properties properties) {
+    private ModConfig(final Properties properties) {
         super(properties);
         this.configVersion = this.getMutable(
-            "config-version", s -> {
-                if (s == null) return 0;
-                return Integer.parseInt(s);
-            }, ModConfig.CURRENT_CONFIG_VERSION
+            "config-version",
+            s -> {
+                if (s == null) {
+                    return 0;
+                } else {
+                    return Integer.parseInt(s);
+                }
+            },
+            ModConfig.CURRENT_CONFIG_VERSION
         );
         this.iconLocation = this.getMutable(
-            "icon-location", ResourceLocation::tryParse,
+            "icon-location",
+            ResourceLocation::tryParse,
             (Minecraft.ON_OSX ? ORIGINAL_MAC_ICON : ORIGINAL_WIN_ICON)
         );
     }
     /* ======================================== */
 
     @Override
-    protected @NotNull ModConfig reload(RegistryAccess registryAccess, Properties properties) {
+    protected @NotNull ModConfig reload(final RegistryAccess registryAccess, final Properties properties) {
         instance = new ModConfig(properties);
         instance.store(MOD_CONFIG);
         return getInstance();
@@ -115,7 +124,7 @@ public final class ModConfig extends Settings<ModConfig> {
      * @param icon Icon Resource location
      * @throws IOException InputStream open failed
      */
-    public static void changeIcon(Minecraft client, ResourceLocation icon) throws IOException {
+    public static void changeIcon(final Minecraft client, final ResourceLocation icon) throws IOException {
         final String[] vanillaPath = ModConfig.VANILLA_ICON_SET.get(icon);
         final IoSupplier<InputStream> iconSupplier;
         if (vanillaPath != null) {

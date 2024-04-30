@@ -14,7 +14,7 @@ public final class MacosUtil extends com.mojang.blaze3d.platform.MacosUtil {
      *
      * @param label badge label
      */
-    public static void setBadgeLabel(@Nullable String label) {
+    public static void setBadgeLabel(final @Nullable String label) {
         final Client client = Client.getInstance();
         final Proxy dockTile = client.sendProxy("NSApplication", "sharedApplication").sendProxy("dockTile");
         dockTile.send("setBadgeLabel:", label);

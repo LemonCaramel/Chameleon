@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 public interface ResourceIo extends IoSupplier<Resource> {
 
-    static IoSupplier<InputStream> create(Resource resource) {
+    static IoSupplier<InputStream> create(final Resource resource) {
         return resource::open;
     }
 }
