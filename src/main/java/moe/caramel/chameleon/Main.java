@@ -35,7 +35,7 @@ public final class Main implements ModInitializer {
         ResourceManagerHelper.get(PackType.CLIENT_RESOURCES).registerReloadListener(new SimpleSynchronousResourceReloadListener() {
             @Override
             public ResourceLocation getFabricId() {
-                return new ResourceLocation("caramel", "chameleon-dock");
+                return ResourceLocation.fromNamespaceAndPath("caramel", "chameleon-dock");
             }
 
             @Override
