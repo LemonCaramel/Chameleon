@@ -36,7 +36,7 @@ public final class ChangeDockIconScreen extends Screen {
                     ModConfig.changeIcon(this.minecraft, entry.icon);
                 } catch (final IOException exception) {
                     exception.printStackTrace();
-                    this.minecraft.getToasts().addToast(new SystemToast(
+                    this.minecraft.getToastManager().addToast(new SystemToast(
                         SystemToast.SystemToastId.PACK_LOAD_FAILURE,
                         Component.translatable("caramel.chameleon.change.exception.title"),
                         Component.translatable("caramel.chameleon.change.exception")

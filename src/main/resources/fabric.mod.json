@@ -21,12 +21,13 @@
     "main": [ "moe.caramel.chameleon.Main" ],
     "modmenu": [ "moe.caramel.chameleon.util.ModMenuImpl" ]
   },
+  "accessWidener": "chameleon.accesswidener",
   "mixins": [ "chameleon-dock.mixins.json" ],
   "depends": {
     "fabric-command-api-v2": "*",
     "fabric-resource-loader-v0": "*",
-    "fabricloader": ">=0.15.10",
-    "minecraft": ">=1.21",
+    "fabricloader": ">=0.16.7",
+    "minecraft": ">=1.21.2",
     "java": ">=21"
   },
   "custom": {

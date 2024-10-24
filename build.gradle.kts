@@ -1,5 +1,5 @@
 plugins {
-    id("fabric-loom") version "1.7-SNAPSHOT"
+    id("fabric-loom") version "1.8-SNAPSHOT"
 }
 
 base {
@@ -10,6 +10,10 @@ base {
 
 java.toolchain {
     languageVersion.set(JavaLanguageVersion.of(21))
+}
+
+loom {
+    accessWidenerPath.set(file("src/main/resources/chameleon.accesswidener"))
 }
 
 repositories {

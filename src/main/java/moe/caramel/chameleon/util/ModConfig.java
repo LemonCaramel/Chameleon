@@ -1,7 +1,8 @@
 package moe.caramel.chameleon.util;
 
+import static java.util.Map.entry;
+import static net.minecraft.resources.ResourceLocation.withDefaultNamespace;
 import com.mojang.blaze3d.platform.NativeImage;
-import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import it.unimi.dsi.fastutil.objects.ObjectOpenHashSet;
 import net.minecraft.client.Minecraft;
 import net.minecraft.core.RegistryAccess;
@@ -28,23 +29,25 @@ public final class ModConfig extends Settings<ModConfig> {
 
     private static final Path MOD_CONFIG = new File("./config/caramel.chameleon.properties").toPath();
     private static final int CURRENT_CONFIG_VERSION = 1;
-    public static final ResourceLocation ORIGINAL_MAC_ICON = ResourceLocation.withDefaultNamespace("icons/minecraft.icns");
-    public static final ResourceLocation ORIGINAL_WIN_ICON = ResourceLocation.withDefaultNamespace("icons/icon_128x128.png");
-    public static final Map<ResourceLocation, String[]> VANILLA_ICON_SET = new Object2ObjectOpenHashMap<>();
-    static {
-        VANILLA_ICON_SET.put(ORIGINAL_MAC_ICON, new String[]{ "icons", "minecraft.icns" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("icons/icon_16x16.png"), new String[]{ "icons", "icon_16x16.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("icons/icon_32x32.png"), new String[]{ "icons", "icon_32x32.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("icons/icon_48x48.png"), new String[]{ "icons", "icon_48x48.png" });
-        VANILLA_ICON_SET.put(ORIGINAL_WIN_ICON, new String[]{ "icons", "icon_128x128.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("icons/icon_256x256.png"), new String[]{ "icons", "icon_256x256.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("snapshot/icons/icon_16x16.png"), new String[]{ "icons", "snapshot", "icon_16x16.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("snapshot/icons/icon_32x32.png"), new String[]{ "icons", "snapshot", "icon_32x32.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("snapshot/icons/icon_48x48.png"), new String[]{ "icons", "snapshot", "icon_48x48.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("snapshot/icons/icon_128x128.png"), new String[]{ "icons", "snapshot", "icon_128x128.png" });
-        VANILLA_ICON_SET.put(ResourceLocation.withDefaultNamespace("snapshot/icons/icon_256x256.png"), new String[]{ "icons", "snapshot", "icon_256x256.png" });
-    }
-    public static final Function<Minecraft, Set<ResourceLocation>> GET_ICON_SET = client -> {
+
+    //<editor-fold desc="Icon registry" defaultstate="collapsed">
+    public static final ResourceLocation ORIGINAL_MAC_ICON = withDefaultNamespace("icons/minecraft.icns");
+    public static final ResourceLocation ORIGINAL_WIN_ICON = withDefaultNamespace("icons/icon_128x128.png");
+    public static final Map<ResourceLocation, String[]> VANILLA_ICON_SET = Map.ofEntries(
+        entry(ORIGINAL_MAC_ICON, new String[]{"icons", "minecraft.icns"}),
+        entry(withDefaultNamespace("icons/icon_16x16.png"), new String[]{ "icons", "icon_16x16.png" }),
+        entry(withDefaultNamespace("icons/icon_32x32.png"), new String[]{ "icons", "icon_32x32.png" }),
+        entry(withDefaultNamespace("icons/icon_48x48.png"), new String[]{ "icons", "icon_48x48.png" }),
+        entry(ORIGINAL_WIN_ICON, new String[]{ "icons", "icon_128x128.png" }),
+        entry(withDefaultNamespace("icons/icon_256x256.png"), new String[]{ "icons", "icon_256x256.png" }),
+        entry(withDefaultNamespace("snapshot/icons/icon_16x16.png"), new String[]{ "icons", "snapshot", "icon_16x16.png" }),
+        entry(withDefaultNamespace("snapshot/icons/icon_32x32.png"), new String[]{ "icons", "snapshot", "icon_32x32.png" }),
+        entry(withDefaultNamespace("snapshot/icons/icon_48x48.png"), new String[]{ "icons", "snapshot", "icon_48x48.png" }),
+        entry(withDefaultNamespace("snapshot/icons/icon_128x128.png"), new String[]{ "icons", "snapshot", "icon_128x128.png" }),
+        entry(withDefaultNamespace("snapshot/icons/icon_256x256.png"), new String[]{ "icons", "snapshot", "icon_256x256.png" })
+    );
+
+    public static final Function<Minecraft, Set<ResourceLocation>> GET_ICON_SET = (client) -> {
         final Set<ResourceLocation> iconSet = new ObjectOpenHashSet<>();
         client.getResourceManager().listResources("icons", resource -> {
             if (resource != null) {
@@ -56,14 +59,11 @@ public final class ModConfig extends Settings<ModConfig> {
         iconSet.addAll(VANILLA_ICON_SET.keySet());
         return iconSet;
     };
+    //</editor-fold>
 
-    /* ======================================== */
+    //<editor-fold desc="Instance manager" defaultstate="collapsed">
     private static ModConfig instance;
 
-    /**
-     * Get Mod config instance.
-     * @return Mod config instance
-     */
     public static ModConfig getInstance() {
         if (instance == null) {
             instance = new ModConfig();
@@ -71,34 +71,21 @@ public final class ModConfig extends Settings<ModConfig> {
 
         return instance;
     }
-    /* ======================================== */
+    //</editor-fold>
 
-
-    /* ======================================== */
+    //<editor-fold desc="Instance" defaultstate="collapsed">
     public final Settings<ModConfig>.MutableValue<Integer> configVersion;
     public final Settings<ModConfig>.MutableValue<ResourceLocation> iconLocation;
 
-    /**
-     * Mod config constructor
-     */
     private ModConfig() {
         this(Settings.loadFromFile(MOD_CONFIG));
     }
 
-    /**
-     * Mod config constructor
-     */
     private ModConfig(final Properties properties) {
         super(properties);
         this.configVersion = this.getMutable(
             "config-version",
-            s -> {
-                if (s == null) {
-                    return 0;
-                } else {
-                    return Integer.parseInt(s);
-                }
-            },
+            s -> (s == null) ? 0 : Integer.parseInt(s),
             ModConfig.CURRENT_CONFIG_VERSION
         );
         this.iconLocation = this.getMutable(
@@ -107,7 +94,6 @@ public final class ModConfig extends Settings<ModConfig> {
             (Minecraft.ON_OSX ? ORIGINAL_MAC_ICON : ORIGINAL_WIN_ICON)
         );
     }
-    /* ======================================== */
 
     @Override
     protected @NotNull ModConfig reload(final RegistryAccess registryAccess, final Properties properties) {
@@ -115,15 +101,9 @@ public final class ModConfig extends Settings<ModConfig> {
         instance.store(MOD_CONFIG);
         return getInstance();
     }
+    //</editor-fold>
 
-    /* ======================================== */
-    /**
-     * Apply and save icon setting.
-     *
-     * @param client Minecraft object
-     * @param icon Icon Resource location
-     * @throws IOException InputStream open failed
-     */
+    //<editor-fold desc="Icon applicator" defaultstate="collapsed">
     public static void changeIcon(final Minecraft client, final ResourceLocation icon) throws IOException {
         final String[] vanillaPath = ModConfig.VANILLA_ICON_SET.get(icon);
         final IoSupplier<InputStream> iconSupplier;
@@ -140,13 +120,6 @@ public final class ModConfig extends Settings<ModConfig> {
         ModConfig.getInstance().iconLocation.update(null, icon);
     }
 
-    /**
-     * Change the icon in Windows OS.
-     *
-     * @param client Minecraft object
-     * @param icon Icon Resource location
-     * @throws IOException InputStream open failed
-     */
     public static void setWindowsIcon(final Minecraft client, final IoSupplier<InputStream> icon) throws IOException {
         ByteBuffer value = null;
 
@@ -157,7 +130,7 @@ public final class ModConfig extends Settings<ModConfig> {
             final GLFWImage.Buffer images = GLFWImage.malloc(1, stack);
 
             value = MemoryUtil.memAlloc(image.getWidth() * image.getHeight() * 4);
-            value.asIntBuffer().put(image.getPixelsRGBA());
+            value.asIntBuffer().put(image.getPixelsABGR());
             images.position(0);
             images.width(image.getWidth());
             images.height(image.getHeight());
@@ -170,5 +143,5 @@ public final class ModConfig extends Settings<ModConfig> {
             }
         }
     }
-    /* ======================================== */
+    //</editor-fold>
 }

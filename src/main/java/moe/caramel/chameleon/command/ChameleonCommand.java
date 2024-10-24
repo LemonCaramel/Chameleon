@@ -29,7 +29,7 @@ public final class ChameleonCommand {
     public static void register(final @NotNull CommandDispatcher<FabricClientCommandSource> dispatcher) {
         dispatcher.register(literal("chameleon").executes(context -> {
             final Minecraft client = Minecraft.getInstance();
-            client.tell(() -> client.setScreen(new ChangeDockIconScreen(null)));
+            client.progressTasks.add(() -> client.setScreen(new ChangeDockIconScreen(null)));
             return 0;
         }).then(
             argument(ICON_NAME, ResourceLocationArgument.id()).suggests(SUGGEST).executes(context -> {
