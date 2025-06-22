@@ -15,7 +15,7 @@ import java.io.IOException;
 
 public final class ChangeDockIconScreen extends Screen {
 
-    private static final int COLOR_WHITE = 0xFFFFFF;
+    private static final int COLOR_WHITE = 0xFFFFFFFF;
 
     private final Screen lastScreen;
     private IconSelectionList iconSelectionList;
@@ -78,11 +78,6 @@ public final class ChangeDockIconScreen extends Screen {
             if (this.getSelected() != null) {
                 this.centerScrollOn(this.getSelected());
             }
-        }
-
-        @Override
-        protected int getScrollbarPosition() {
-            return super.getScrollbarPosition() + 20;
         }
 
         @Override
