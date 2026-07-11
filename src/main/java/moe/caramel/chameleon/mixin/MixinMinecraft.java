@@ -1,6 +1,7 @@
 package moe.caramel.chameleon.mixin;
 
 import static moe.caramel.chameleon.util.ModConfig.*;
+
 import com.mojang.blaze3d.platform.IconSet;
 import com.mojang.blaze3d.platform.Window;
 import moe.caramel.chameleon.Main;
@@ -11,7 +12,7 @@ import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.components.toasts.SystemToast;
 import net.minecraft.client.main.GameConfig;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.server.packs.PackResources;
 import net.minecraft.server.packs.VanillaPackResources;
 import net.minecraft.server.packs.resources.IoSupplier;
@@ -24,55 +25,67 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+
 import java.io.InputStream;
 import java.util.Objects;
 import java.util.Optional;
 import java.io.IOException;
 
+/**
+ The type Mixin minecraft.
+ */
 @Mixin(Minecraft.class)
-public abstract class MixinMinecraft {
-
-    @Shadow public abstract ResourceManager getResourceManager();
-    @Shadow @Final private VanillaPackResources vanillaPackResources;
-
-    @Redirect(
-        method = "<init>", at = @At(
-            value = "INVOKE",
-            target = "Lcom/mojang/blaze3d/platform/Window;setIcon(Lnet/minecraft/server/packs/PackResources;Lcom/mojang/blaze3d/platform/IconSet;)V"
-        )
-    )
-    private void ignoreInit(final Window window, final PackResources resources, final IconSet iconSet) { }
-
-    // Run after all resources are loaded
-    @Inject(method = "<init>", at = @At(value = "TAIL"))
-    public void loadMinecraftIcon(final GameConfig gameConfig, final CallbackInfo ci) throws IOException {
-        final ModConfig config = ModConfig.getInstance();
-
-        final ResourceLocation location = config.iconLocation.get();
-        final String[] vanillaPath = ModConfig.VANILLA_ICON_SET.get(location);
-
-        final IoSupplier<InputStream> iconSupplier;
-        if (vanillaPath != null) {
-            iconSupplier = Objects.requireNonNull(vanillaPackResources.getRootResource(vanillaPath));
-        } else {
-            Optional<Resource> resource = this.getResourceManager().getResource(location);
-            if (resource.isEmpty()) {
-                Main.INIT_TOAST_QUEUE.add(new SystemToast(
-                    SystemToast.SystemToastId.PACK_LOAD_FAILURE,
-                    Component.translatable("caramel.chameleon.resetToast.title"),
-                    Component.translatable("caramel.chameleon.resetToast.desc")
-                ));
-                final ResourceLocation icon = (Main.ON_OSX ? ORIGINAL_MAC_ICON : ORIGINAL_WIN_ICON);
-                config.iconLocation.update(null, icon);
-                resource = this.getResourceManager().getResource(icon);
-            }
-            iconSupplier = ResourceIo.create(resource.get());
-        }
-
-        if (Main.ON_OSX) {
-            MacosUtil.loadIcon(iconSupplier);
-        } else {
-            ModConfig.setWindowsIcon(Minecraft.getInstance(), iconSupplier);
-        }
-    }
+public abstract class MixinMinecraft{
+	
+	@Shadow
+	@Final
+	private VanillaPackResources vanillaPackResources;
+	
+	/**
+	 Gets resource manager.
+	 
+	 @return the resource manager
+	 */
+	@Shadow
+	public abstract ResourceManager getResourceManager();
+	
+	@Redirect(method = "<init>", at = @At(value = "INVOKE", target = "Lcom/mojang/blaze3d/platform/Window;setIcon(Lnet/minecraft/server/packs/PackResources;Lcom/mojang/blaze3d/platform/IconSet;)V"))
+	private void ignoreInit(final Window window, final PackResources resources, final IconSet iconSet){}
+	
+	/**
+	 Load minecraft icon.
+	 
+	 @param gameConfig the game config
+	 @param ci         the ci
+	 
+	 @throws IOException the io exception
+	 */
+	// Run after all resources are loaded
+	@Inject(method = "<init>", at = @At(value = "TAIL"))
+	public void loadMinecraftIcon(final GameConfig gameConfig, final CallbackInfo ci) throws IOException{
+		final ModConfig config = ModConfig.getInstance();
+		
+		final Identifier location = config.iconLocation.get();
+		final String[] vanillaPath = ModConfig.VANILLA_ICON_SET.get(location);
+		
+		final IoSupplier<InputStream> iconSupplier;
+		if (vanillaPath != null){
+			iconSupplier = Objects.requireNonNull(vanillaPackResources.getRootResource(vanillaPath));
+		} else{
+			Optional<Resource> resource = this.getResourceManager().getResource(location);
+			if (resource.isEmpty()){
+				Main.INIT_TOAST_QUEUE.add(new SystemToast(SystemToast.SystemToastId.PACK_LOAD_FAILURE, Component.translatable("caramel.chameleon.resetToast.title"), Component.translatable("caramel.chameleon.resetToast.desc")));
+				final Identifier icon = (Main.ON_OSX ? ORIGINAL_MAC_ICON : ORIGINAL_WIN_ICON);
+				config.iconLocation.update(null, icon);
+				resource = this.getResourceManager().getResource(icon);
+			}
+			iconSupplier = ResourceIo.create(resource.get());
+		}
+		
+		if (Main.ON_OSX){
+			MacosUtil.loadIcon(iconSupplier);
+		} else{
+			ModConfig.setWindowsIcon(Minecraft.getInstance(), iconSupplier);
+		}
+	}
 }

@@ -5,18 +5,18 @@ import ca.weblite.objc.Proxy;
 import org.jetbrains.annotations.Nullable;
 
 /**
- * macOS Utilities.
+ macOS Utilities.
  */
-public final class MacosUtil extends com.mojang.blaze3d.platform.MacosUtil {
-
-    /**
-     * Sets the badge label for the dock.
-     *
-     * @param label badge label
-     */
-    public static void setBadgeLabel(final @Nullable String label) {
-        final Client client = Client.getInstance();
-        final Proxy dockTile = client.sendProxy("NSApplication", "sharedApplication").sendProxy("dockTile");
-        dockTile.send("setBadgeLabel:", label);
-    }
+public final class MacosUtil extends com.mojang.blaze3d.platform.MacosUtil{
+	
+	/**
+	 Sets the badge label for the dock.
+	 
+	 @param label badge label
+	 */
+	public static void setBadgeLabel(final @Nullable String label){
+		final Client client = Client.getInstance();
+		final Proxy dockTile = client.sendProxy("NSApplication", "sharedApplication").sendProxy("dockTile");
+		dockTile.send("setBadgeLabel:", label);
+	}
 }

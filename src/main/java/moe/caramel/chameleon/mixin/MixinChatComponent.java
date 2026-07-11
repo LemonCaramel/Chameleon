@@ -2,7 +2,7 @@ package moe.caramel.chameleon.mixin;
 
 import moe.caramel.chameleon.Main;
 import moe.caramel.chameleon.util.MacosUtil;
-import net.minecraft.client.GuiMessage;
+import net.minecraft.client.multiplayer.chat.GuiMessage;
 import net.minecraft.client.gui.components.ChatComponent;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
@@ -11,6 +11,9 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
+/*
+ * The type Mixin chat component.
+ */
 @Mixin(ChatComponent.class)
 public final class MixinChatComponent {
 

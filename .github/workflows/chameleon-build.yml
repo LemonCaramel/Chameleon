@@ -7,25 +7,30 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-
+    
     steps:
-      - uses: actions/checkout@v4
-
-      - uses: gradle/actions/wrapper-validation@v3
-
-      - name: Set up JDK
-        uses: actions/setup-java@v4
+      - name: checkout repository
+        uses: actions/checkout@v6
+          
+      - name: validate gradle wrapper
+        uses: gradle/actions/wrapper-validation@v6
+        
+      - name: setup jdk
+        uses: actions/setup-java@v5
         with:
-          java-version: '21'
-          distribution: 'zulu'
-
-      - name : Build with Gradle
-        run: |
-          export BUILD_NUMBER=${{ github.run_number }}
-          ./gradlew build --no-daemon --stacktrace
-
+          java-version: '25'
+          distribution: 'microsoft'
+          
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v6
+        with:
+          cache-provider: basic
+          
+      - name: Build with Gradle
+        run: ./gradlew build
+        
       - name: Upload a Build Artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: Chameleon-${{ github.run_number }}
           path: build/libs/*.jar
